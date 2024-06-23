@@ -1,0 +1,441 @@
+:root {
+    --fw-lighter-gray: #999;
+    --fw-light-gray: #444;
+    --fw-dark-gray: #222;
+    --fw-transparent-gray: #22222293;
+    --fw-white: #fff;
+    --fw-folder-icon: '📁';
+    --fw-file-icon: '📄';
+}
+
+[data-fw-tooltip] {
+    position: relative;
+}
+
+[data-fw-tooltip]:before {
+    content: attr(data-fw-tooltip);
+    position: absolute;
+    background-color: #333;
+    color: #fff;
+    padding: 5px 10px;
+    border-radius: 4px;
+    font-size: 14px;
+    z-index: 1;
+    white-space: nowrap;
+    visibility: visible;
+    opacity: 1;
+    top: 110%;
+    border: 0.5px solid var(--fw-white);
+}
+
+
+body {
+    font-family: Arial, sans-serif;
+    /* background-color: var(--fw-dark-gray);
+    color: #fff;
+    margin: 0;
+    padding: 1.25rem; */
+}
+
+.fw-root-element {
+    position: relative;
+}
+
+.fw-container {
+    max-width: 37.5rem;
+    margin: 0 auto;
+    background-color: var(--fw-dark-gray);
+    border-radius: 0.5rem;
+    padding: 1.25rem;
+    box-shadow: 0 0.25rem 0.5rem rgba(0, 0, 0, 0.1);
+}
+
+.fw-item {
+    cursor: pointer;
+    padding: 0.625rem;
+    transition: background-color 0.3s ease;
+    color: var(--fw-white)
+}
+
+.fw-item:not(:last-child) {
+    border-bottom: 0.0625rem solid var(--fw-light-gray);
+}
+
+.fw-item:hover , .fw-item:focus {
+    background-color: var(--fw-light-gray);
+}
+
+.fw-item:focus {
+    outline: 0;
+}
+
+
+.fw-selected-item {
+    background-color: var(--fw-light-gray);
+}
+
+.fw-folder-icon::before {
+    content: var(--fw-folder-icon);
+    margin-right: 0.625em;
+}
+
+.fw-file-icon::before {
+    content: var(--fw-file-icon);
+    margin-right: 0.625em;
+}
+
+.fw-title-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.625rem;
+    background-color: var(--fw-dark-gray);
+    color: #fff;
+    border-radius: 0.25rem 0.25rem 0 0;
+}
+
+/* Breadcrumb styles */
+.fw-breadcrumb {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    font-family: Arial, sans-serif;
+}
+
+.fw-breadcrumb li {
+    display: inline;
+}
+
+.fw-breadcrumb li:not(:last-child, :first-child)::after {
+    content: "/";
+    margin: 0 5px;
+    color: var(--fw-light-gray);
+}
+
+.fw-breadcrumb li span {
+    text-decoration: none;
+    padding: 2px 5px;
+    color: var(--fw-white);
+    background-color: transparent;
+    border: 1px solid transparent;
+    cursor: pointer;
+}
+
+.fw-breadcrumb li:first-child span {
+    padding-right: 0;
+    color: var(--fw-lighter-gray);
+}
+
+.fw-file-link {
+    background: var(--fw-light-gray);
+    padding: 0.5rem 0.7rem;
+    border-radius: 0.5rem;
+}
+
+.fw-back-button,
+.fw-options-button {
+    padding: 0.5rem;
+    background-color: transparent;
+    border: none;
+    color: #fff;
+    cursor: pointer;
+}
+
+
+.fw-options-container {
+    position: relative;
+    width: max-content;
+}
+
+.fw-option-items {
+    max-height: 0;
+    overflow: auto;
+    list-style: none;
+    background-color: var(--fw-light-gray);
+    color: var(--fw-lighter-gray);
+    transition: all 0.1s ease-out;
+    position: absolute;
+    right: 0;
+    border-radius: 0.2rem;
+    min-width: 7rem;
+    cursor: pointer;
+}
+
+.fw-option-item>* {
+    font-size: 1rem;
+    display: inline-block;
+    width: max-content;
+    color: var(--fw-white);
+    text-decoration: none;
+}
+
+.fw-option-item:not(:last-child)>* {
+    margin-bottom: 0.8rem;
+}
+
+/* .fw-option-item:hover {
+} */
+
+.fw-option-radio {
+    position: absolute;
+    top: 0;
+    left: -9001px;
+}
+
+.fw-options-button:focus~.fw-option-items,
+.fw-option-items:has(*:focus) {
+    max-height: 10em;
+    padding: 1rem;
+}
+
+
+.fw-files-list {
+    background-color: var(--fw-dark-gray);
+    border-radius: 0 0 0.25rem 0.25rem;
+    padding: 1.25rem;
+}
+
+.fw-item {
+    cursor: pointer;
+    padding: 0.625rem;
+    transition: background-color 0.1s ease;
+}
+
+.fw-item:not(:last-child) {
+    border-bottom: 0.0625rem solid var(--fw-light-gray);
+}
+
+.fw-item:hover {
+    background-color: var(--fw-light-gray);
+}
+
+.fw-folder-icon::before {
+    content: var(--fw-folder-icon);
+    margin-right: 0.625em;
+}
+
+.fw-file-icon::before {
+    content: var(--fw-file-icon);
+    margin-right: 0.625em;
+}
+
+
+
+@keyframes fw-highlight {
+    0% {
+        background-color: var(--fw-light-gray);
+        /* Start with highlighted background */
+    }
+
+    100% {
+        background-color: initial;
+        /* Return to the initial background color */
+    }
+}
+
+.fw-highlight-animation {
+    animation: fw-highlight 3s ease-in-out;
+    /* Run the highlight animation for 2 seconds */
+}
+
+.fw-no-files-text {
+    font-size: 1.5rem;
+    text-align: center;
+}
+
+.fw-no-files-icon {
+    font-size: 4rem;
+}
+
+.fw-no-files-subtext {
+    text-align: center;
+    color: #666;
+}
+
+.fw-center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 0;
+}
+
+
+.fw-loader {
+    position: relative;
+}
+
+.fw-loader::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 9999;
+    /* Ensure the loader is above other content */
+}
+
+.fw-loader::after {
+    content: 'Wait a sec...';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: var(--fw-white);
+    font-size: 1rem;
+    z-index: 10000;
+    /* Ensure the loader text is above the overlay */
+}
+
+.fw-search-container.fw-search-container-closed {
+    display: none;
+}
+
+.fw-search-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    background: var(--fw-transparent-gray);
+    color: var(--fw-white);
+    gap: 1rem;
+}
+
+.fw-search-field {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: transparent;
+    border: 0.5px solid var(--fw-light-gray);
+}
+
+.fw-search-field:has(input[type="text"]:focus) {
+    border: 0.5px solid var(--fw-white);
+}
+
+.fw-search-field input {
+    background: transparent;
+    outline: none;
+    border: none;
+    color: white;
+}
+
+.fw-search-option-field {
+    font-size: 0.5rem;
+    height: 100%;
+    width: max-content;
+    /* padding: 0.1rem 0.5rem; */
+    background: var(--fw-light-gray);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 0.3rem;
+    cursor: pointer;
+}
+
+.fw-search-option-field:not(:last-child) {
+    margin-right: 0.5rem;
+}
+
+.fw-search-option-field label {
+    cursor: pointer;
+    padding: 0.2rem 0.5rem;
+}
+
+.fw-search-option-field input {
+    display: none;
+}
+
+.fw-search-option-field:has(input:checked) {
+    background: var(--fw-dark-gray);
+    border: 1px solid var(--fw-white);
+}
+
+.fw-search-results {
+    display: flex;
+    /* justify-content: center; */
+    align-items: center;
+    flex-direction: column;
+    min-height: 50%;
+    width: auto;
+    overflow: auto;
+}
+
+.fw-search-results:empty {
+    background: var(--fw-lighter-gray);
+}
+
+.fw-search-field,
+.fw-search-results {
+    padding: 0.5rem;
+    border-radius: 0.5rem;
+    box-shadow: 0.5rem 0.5rem 0.8rem #00000011;
+}
+
+.fw-search-field input[type="text"],
+.fw-search-results {
+    width: 30rem;
+    aspect-ratio: 20/1;
+
+}
+
+.fw-search-results>* {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    padding: 0.5rem;
+    border-radius: 0.5rem;
+    border: 0 !important;
+    width: calc(100% - 1rem);
+}
+
+.fw-close-search-button {
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 1rem;
+    background: var(--fw-dark-gray);
+    border: 0.5px solid var(--fw-light-gray);
+    color: var(--fw-white);
+    cursor: pointer;
+    font-size: 1rem;
+    width: 2rem;
+    aspect-ratio: 1/1;
+    border-radius: 0.5rem;
+}
+
+.fw-close-search-button:hover {
+    background: var(--fw-dark-gray);
+    border-color: var(--fw-white);
+}
+
+.fw-search-action {
+    background: transparent;
+    border: 0;
+    color: var(--fw-white);
+
+}
+
+/* 
+.fw-search-results .fw-folder-icon , .fw-search-results .fw-file-icon {
+    font-size: 1.2rem;
+}
+.fw-search-results > * .fw-search-result-details p{
+    margin: 0;
+}
+
+.fw-search-results > * .fw-search-result-details p:first-child{
+    margin: 0;
+} */
+
+
+/* .fw-search-field .fw-search-icon{
+
+} */
