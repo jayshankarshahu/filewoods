@@ -15,7 +15,7 @@ class FileWoods {
         let valid = true;
         try {
             new RegExp(s);
-        } catch(e) {
+        } catch (e) {
             valid = false;
         }
         return valid;
@@ -102,16 +102,16 @@ class FileWoods {
             match_case: this.search_option_matchcase.checked
         }
 
-        if( this.search_option_regex.checked ){
-            
-            if( FileWoods.is_valid_regex(q) ){
+        if (this.search_option_regex.checked) {
+
+            if (FileWoods.is_valid_regex(q)) {
 
                 options.regex = true;
                 this.search_field.removeAttribute('data-fw-tooltip')
 
             } else {
 
-                this.search_field.setAttribute('data-fw-tooltip' , 'invalid regex')
+                this.search_field.setAttribute('data-fw-tooltip', 'invalid regex')
                 options.regex = false
 
             }
@@ -122,56 +122,56 @@ class FileWoods {
 
         console.log(this.#file_list);
 
-        this.get_search_result( q , options ).forEach( single_path => {
+        this.get_search_result(q, options).forEach(single_path => {
 
-            var single_file_element = this.get_file_element( this.#file_list[single_path] , false );
+            var single_file_element = this.get_file_element(this.#file_list[single_path], false);
             single_file_element.addEventListener('dblclick', () => { this.node_open_callback(this.#file_list[single_path]) });
 
             // if (this.#file_list[single_path].type === FileWoods.fw_dir) {
-                single_file_element.addEventListener('dblclick',  () => {
-                     this.close_search();
-                     this.go_to(single_path);
-                });
+            single_file_element.addEventListener('dblclick', () => {
+                this.close_search();
+                this.go_to(single_path);
+            });
             // }
-            
+
             this.search_results_field.appendChild(single_file_element);
 
-            console.log(single_path , this.#file_list[single_path].abs_path);
+            console.log(single_path, this.#file_list[single_path].abs_path);
 
         });
 
     }
 
-    get_search_result = (q , options) => {
+    get_search_result = (q, options) => {
 
 
         let results = [];
 
-        if( options.regex ) {
+        if (options.regex) {
 
-            if( FileWoods.is_valid_regex(q) ){
-                
-                results.push( ...this.regex_search(new RegExp(q)));
+            if (FileWoods.is_valid_regex(q)) {
+
+                results.push(...this.regex_search(new RegExp(q)));
 
             }
 
         }
 
-        results.push( ...Object.keys(this.#file_list).filter( f => {
+        results.push(...Object.keys(this.#file_list).filter(f => {
 
-            if( options.match_case ){
+            if (options.match_case) {
                 return this.basename(f).includes(q)
             } else {
                 return this.basename(f).toLowerCase().includes(q.toLowerCase());
             }
 
-        } ) )
+        }))
 
         return results;
     }
 
-    regex_search = regex => Object.keys(this.#file_list).filter( f => regex.test(this.basename(f)) );
-    
+    regex_search = regex => Object.keys(this.#file_list).filter(f => regex.test(this.basename(f)));
+
 
     #file_list = {};
     location_stack = [];
@@ -219,7 +219,7 @@ class FileWoods {
             text: 'Back'
         });
 
-        this.back_button.addEventListener('click', () => { this.go_back() } );
+        this.back_button.addEventListener('click', () => { this.go_back() });
 
         this.bread_crumbs_container = this.build_element({
             name: 'ol',
@@ -296,11 +296,11 @@ class FileWoods {
 
         this.search_input.oninput = this.render_search_results;
 
-       
+
         //option regex
         const regex_field = this.build_element({
             name: 'div',
-            classes: ['fw-search-option-field'], 
+            classes: ['fw-search-option-field'],
         })
 
         this.search_option_regex = this.build_element({
@@ -316,21 +316,21 @@ class FileWoods {
 
 
         const regex_label = this.build_element({
-            name:'label',
+            name: 'label',
             attr: {
-                for:'fw-search-option-regex',
+                for: 'fw-search-option-regex',
                 title: 'RegEx Search',
-                tabindex : 0
+                tabindex: 0
             },
-            text:"RegEx"
+            text: "RegEx"
         })
 
-        regex_field.append( this.search_option_regex , regex_label );
+        regex_field.append(this.search_option_regex, regex_label);
 
         //option case
         const match_case_field = this.build_element({
             name: 'div',
-            classes: ['fw-search-option-field'],  
+            classes: ['fw-search-option-field'],
         })
 
         this.search_option_matchcase = this.build_element({
@@ -346,19 +346,19 @@ class FileWoods {
 
 
         const match_case_label = this.build_element({
-            name:'label',
+            name: 'label',
             attr: {
-                for:'fw-search-option-matchcase',
+                for: 'fw-search-option-matchcase',
                 title: 'Case Sensitive Seach',
-                tabindex : 0 
+                tabindex: 0
             },
-            text:"Aa"
+            text: "Aa"
         })
 
-        match_case_field.append( this.search_option_matchcase , match_case_label );
-        
+        match_case_field.append(this.search_option_matchcase, match_case_label);
 
-       
+
+
         this.search_results_field = this.build_element({
             name: 'div',
             classes: ['fw-search-results'],
@@ -373,7 +373,7 @@ class FileWoods {
         this.search_close_button.onclick = this.close_search;
 
 
-        this.search_field.append(this.search_input , regex_field , match_case_field)
+        this.search_field.append(this.search_input, regex_field, match_case_field)
         this.search_bar_container.append(this.search_field, this.search_results_field, this.search_close_button)
 
 
@@ -390,51 +390,51 @@ class FileWoods {
 
         this.#render_location(this.current_location);
 
-        if( details.keyboard_shortcuts ) {
+        if (details.keyboard_shortcuts) {
 
             let typing = false;
             window.addEventListener('keypress', (e) => {
-    
+
                 if (document.activeElement === document.body && /^.$/u.test(e.key)) {
                     typing = true;
-    
+
                     this.hidden_search_input.value += e.key;
-    
+
                     const index = this.#current_rendered_list.paths.findIndex(el => this.basename(el).toLowerCase().startsWith(this.hidden_search_input.value.toLowerCase()));
                     this.#current_rendered_list.focus_at = index === -1 ? this.#current_rendered_list.focus_at : index;
                     this.#highlight_item_at_focus();
-    
+
                     typing = false;
                 }
-    
+
             })
-    
+
             setInterval(() => {
                 if (!typing) {
                     this.hidden_search_input.value = '';
                 }
             }, 1000);
-    
+
             window.onkeydown = (e) => {
-    
+
                 const code = (e.keyCode ? e.keyCode : e.which);
-    
+
                 if (code === 38) {//up key
                     this.#move_keyboard_cursor(-1);
                 } else if (code === 40) { //down key
                     this.#move_keyboard_cursor(1);
                 } else if (e.shiftKey && code === 13) {
                     this.go_back();
-                } else if (code === 13 && document.activeElement && document.activeElement.isFileWoodsItem ) {
-                    
+                } else if (code === 13 && document.activeElement && document.activeElement.isFileWoodsItem) {
+
                     this.go_to(document.activeElement.FileWoods_abs_path);
 
                 }
-    
+
             }
-    
+
             window.addEventListener('click', (e) => {
-    
+
                 //there is a problem with doing this
                 //that some other click listeners run before this and this cancels out there work so have to solve it
                 if (!this.root_element.contains(e.target)) {
@@ -492,7 +492,7 @@ class FileWoods {
 
     }
 
-    get_file_element( details_object, highlighted = false ) {
+    get_file_element(details_object, highlighted = false) {
 
         // const details_copy = details_object;
 
@@ -584,8 +584,10 @@ class FileWoods {
             full_path += `/${path}`;
 
             const listItem = document.createElement('li');
-            const link = document.createElement('span');
+            const link = document.createElement('a');
             link.setAttribute('data-location', FileWoods.make_abs_path(full_path));
+            link.title = `Go to ${FileWoods.make_abs_path(full_path)}`;
+            link.href = 'javascript:;';
 
             link.addEventListener('click', (e) => {
                 e.preventDefault();

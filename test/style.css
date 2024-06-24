@@ -112,7 +112,7 @@ body {
     color: var(--fw-light-gray);
 }
 
-.fw-breadcrumb li span {
+.fw-breadcrumb li > * {
     text-decoration: none;
     padding: 2px 5px;
     color: var(--fw-white);
@@ -121,7 +121,7 @@ body {
     cursor: pointer;
 }
 
-.fw-breadcrumb li:first-child span {
+.fw-breadcrumb li:first-child > * {
     padding-right: 0;
     color: var(--fw-lighter-gray);
 }
