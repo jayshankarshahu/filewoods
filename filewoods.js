@@ -127,12 +127,12 @@ class FileWoods {
             var single_file_element = this.get_file_element( this.#file_list[single_path] , false );
             single_file_element.addEventListener('dblclick', () => { this.node_open_callback(this.#file_list[single_path]) });
 
-            if (this.#file_list[single_path].type === FileWoods.fw_dir) {
+            // if (this.#file_list[single_path].type === FileWoods.fw_dir) {
                 single_file_element.addEventListener('dblclick',  () => {
                      this.close_search();
                      this.go_to(single_path);
                 });
-            }
+            // }
             
             this.search_results_field.appendChild(single_file_element);
 
